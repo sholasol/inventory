@@ -8,6 +8,15 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        if(!auth()->user()->is_admin){
+            abort(403, 'Unauthorised ');
+        }
+        
+        $users = User::all();
+        return view('users.index', compact('users'));
+    }
     public function store(Request $request)
     {
         $request->validate([
